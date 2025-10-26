@@ -1,0 +1,976 @@
+//colors
+$primary-color: #F4F2ED;
+$bg-color: #121212;
+$nav-link-bg-color: #1E1E1E;
+$nav-btn-color: #C1B159;
+//mixin
+@mixin flex-layout($align: center, $justify: space-between, $direction: row,$gap:2rem) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+  flex-direction: $direction;
+  gap: $gap;
+}
+
+@mixin max-wh($width:100%, $height: auto) {
+  max-width: $width;
+  height: $height;
+}
+
+@mixin grid-layout($gtc:1fr 1fr, $gap:1.5rem, $pad:1.5rem, $gtr:null) {
+  display: grid;
+  grid-template-columns: $gtc;
+  gap: $gap;
+  padding: $pad;
+  @if $gtr {
+    grid-template-rows: $gtr;
+  }
+}
+
+@mixin cursor-animation(
+  $x1: -30px,
+  $x2: -10px,
+  $y1: 0px,
+  $y2: 0px,
+  $z1: 0deg,
+  $z2: 0deg,
+  $dir: left,
+  $bg-color: lighten($nav-link-bg-color, 10%),
+  $icon-size: 2rem
+) {
+  position: relative;
+  padding: 10px 0;
+
+  & > *:nth-child(1) {
+    font-size: $icon-size;
+    opacity: 0.7;
+    border-radius: 50%;
+    background-color: $bg-color;
+    transition: all 0.6s ease 0.3s;
+    cursor: pointer;
+    transform: translate(0, 0) rotate(0deg);
+    z-index: 2;
+  }
+
+  & > *:nth-child(2) {
+    font-size: $icon-size;
+    opacity: 0;
+    border-radius: 50%;
+    background: transparent;
+    transition: all 0.6s ease 0.3s;
+    cursor: pointer;
+    transform: translate($x1, $y1) rotate($z1);
+    position: absolute;
+    #{$dir}: 0;
+    z-index: 1;
+  }
+
+  &:hover {
+    & > *:nth-child(1) {
+      opacity: 0;
+      transform: translate($x2, $y2) rotate($z2);
+      transition: all 0.6s ease 0.3s;
+    }
+
+    & > *:nth-child(2) {
+      opacity: 0.7;
+      transform: translate(0, 0) rotate(0deg);
+      transition: all 0.6s ease 0.3s;
+      background-color: $bg-color;
+    }
+  }
+}
+
+@mixin card-style($padding: 5rem 7rem, $radius: 2.5rem, $bg: $nav-link-bg-color) {
+  padding: $padding;
+  border-radius: $radius;
+  background-color: $bg;
+}
+
+//////////////////////////////////////////////////////
+// bp
+///////////////////////////////////////////////////////
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  @include max-wh(100%, 100%);
+  background-color: $bg-color;
+  color: $primary-color;
+  font-family: 'Neue Haas Grotesk Display Pro', 'Inter', sans-serif;
+  font-size: 62.5%;
+  font-weight: 400;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  @include max-wh(100%, auto);
+  display: block;
+  max-width: 14400px;
+  margin: 0 auto;
+
+  section:nth-child(1) {
+    @include max-wh(100%, auto);
+    @include flex-layout(center, space-between, row);
+    padding: 1rem 2rem;
+
+
+    .logo {
+      img {
+        @include max-wh(180px, auto);
+        background-color: transparent;
+        aspect-ratio: 3/1;
+        object-fit: contain;
+      }
+    }
+
+    & > *:nth-child(2) > :last-child
+      //*:nth-child(5)
+
+    {
+      display: none;
+      //  border: 1px solid red;
+    }
+
+    nav {
+      @include flex-layout(center, space-between, row);
+      gap: 0.5rem;
+      text-transform: uppercase;
+      font-weight: 550;
+      letter-spacing: 0.12rem;
+      font-size: 1.3rem;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+
+      h4 {
+        border: none;
+        border-radius: .8rem;
+        padding: 1.2rem 1.6rem;
+        background-color: $nav-link-bg-color;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: inherit;
+        font-weight: inherit;
+        opacity: 0.9;
+        font-family: inherit;
+
+        &:hover {
+          background-color: lighten($nav-link-bg-color, 10%);
+        }
+
+        span {
+          border-radius: 50%;
+          width: auto;
+          height: auto;
+          background-color: $nav-btn-color;
+          color: $bg-color;
+          padding: 0.4rem 0.6rem;
+          font-size: 1.1rem;
+          font-weight: 600;
+          gap: 0.1rem;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          margin-left: 0.5rem;
+          line-height: 1;
+          font-family: 'Inter', sans-serif;
+        }
+
+        select {
+          border: none;
+          background: transparent;
+          outline: none;
+          color: $primary-color;
+          cursor: pointer;
+          font-family: inherit;
+          font-weight: inherit;
+
+          option {
+            background-color: $bg-color;
+            color: $primary-color;
+          }
+        }
+      }
+
+      .btn-contact {
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: transparent;
+
+        }
+
+        h4 {
+          background-color: $nav-btn-color;
+          color: $bg-color;
+          font-weight: 600;
+          font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+          border: 1px dotted transparent;
+          opacity: 1;
+
+          &:hover {
+            background: transparent;
+            color: darken($nav-btn-color, 10%);
+            border-color: lighten($nav-btn-color, 20%);
+
+          }
+        }
+      }
+    }
+  }
+
+  section:nth-child(2) {
+    @include max-wh(100%, auto);
+    @include grid-layout();
+
+    img {
+      @include max-wh(100%, auto);
+      border-radius: 2.5rem;
+    }
+
+    & > *:nth-child(2) {
+      margin: 0 auto;
+      @include max-wh(100%, auto);
+      @include flex-layout(start, space-between, column);
+      //border: 2px solid red;
+      @include card-style();
+    }
+
+    & > *:nth-child(2) > *:nth-child(1) {
+      font-size: 1.3rem;
+      font-weight: 500;
+      letter-spacing: 0.1rem;
+      text-transform: uppercase;
+      opacity: 0.8;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+      //border:2px solid red;
+    }
+
+    & > *:nth-child(2) > *:nth-child(2) {
+      @include flex-layout(start, space-between, column);
+      gap: 3rem;
+      //border:2px solid red;
+    }
+
+    & > *:nth-child(2) > *:nth-child(2) > *:nth-child(1) {
+      font-size: 5.2rem;
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+      text-transform: uppercase;
+      //border:2px solid red;
+    }
+
+    & > *:nth-child(2) > *:nth-child(2) > *:nth-child(2) {
+      font-size: 2.2rem;
+      font-weight: 400;
+      line-height: 1.3;
+      opacity: 0.9;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+      //border:2px solid red;
+    }
+
+    & > *:nth-child(2) > *:nth-child(2) > *:nth-child(3) {
+      font-size: 1.3rem;
+      font-weight: 500;
+      letter-spacing: 0.1rem;
+      text-transform: uppercase;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+      //border:2px solid red;
+      @include flex-layout(center, center, row);
+      gap: 0.5rem;
+      @include cursor-animation($y1: -20px, $y2: -20px);
+
+      & > *:nth-child(1),
+      & > *:nth-child(2) {
+        padding: 0.4rem 0.6rem;
+      }
+    }
+  }
+}
+
+section:nth-child(3) {
+  margin: 0 auto;
+  @include max-wh(100%, auto);
+  @include flex-layout(center, space-around, row);
+  padding: 5rem 7rem;
+  font-size: 2rem;
+  text-align: center;
+
+  p {
+    font-size: 1.3rem;
+    font-weight: 500;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    opacity: 0.8;
+    font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  }
+
+  h2 {
+    font-size: 5.2rem;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  }
+}
+
+section:nth-child(4) {
+  //border:2px solid red;
+  @include grid-layout($gtr: 1fr 1fr);
+  @include max-wh(100%, auto);
+
+
+  & > *:nth-child(1) {
+    //border:2px solid red;
+    @include max-wh(100%, auto);
+    @include card-style();
+    @include flex-layout(start, space-between, column);
+    text-align: justify;
+
+    & > *:nth-child(1) {
+      font-size: 1.3rem;
+      font-weight: 500;
+      letter-spacing: 0.1rem;
+      text-transform: uppercase;
+      opacity: 0.8;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+    }
+
+    & > *:nth-child(2) h2 {
+      font-size: 4.4rem;
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+      text-transform: uppercase;
+    }
+
+    & > *:nth-child(2) p {
+      padding: 2rem 0;
+      font-size: 1.8rem;
+      font-weight: 400;
+      line-height: 1.5;
+      column-count: 2;
+      column-gap: 3rem;
+      column-rule: 1px solid lighten($nav-link-bg-color, 10%);
+      text-align: justify;
+      hyphens: auto;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+      opacity: 0.6;
+    }
+
+  }
+
+  img {
+    @include max-wh(100%, auto);
+    width: 100%;
+    border-radius: 2.5rem;
+    //border:2px solid red;
+  }
+
+  & > *:nth-child(4) {
+    //border:2px solid red;
+    @include max-wh(100%, auto);
+    @include card-style();
+    @include flex-layout(start, space-between, column);
+    text-align: justify;
+
+    & > *:nth-child(1) {
+      font-size: 1.3rem;
+      font-weight: 500;
+      letter-spacing: 0.1rem;
+      text-transform: uppercase;
+      opacity: 0.8;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+    }
+
+    & > *:nth-child(2) h2 {
+      font-size: 4.4rem;
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+      text-transform: uppercase;
+      //border:2px solid red;
+    }
+
+    & > *:nth-child(2) p {
+      padding: 2rem 0;
+      font-size: 1.8rem;
+      font-weight: 400;
+      line-height: 1.5;
+      column-count: 2;
+      column-gap: 3rem;
+      column-rule: 1px solid lighten($nav-link-bg-color, 10%);
+      text-align: justify;
+      hyphens: auto;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+      opacity: 0.6;
+    }
+  }
+}
+
+section:nth-child(5) {
+  //border:2px solid red;
+  @include max-wh(180%, auto);
+  @include flex-layout(start, space-between, row);
+  padding: 5rem 7rem;
+  text-transform: uppercase;
+
+  & > *:nth-child(1) {
+    font-size: 4.4rem;
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+    //border:2px solid red;
+  }
+
+  & > *:nth-child(2) {
+    //border:2px solid red;
+    font-size: 1.3rem;
+    font-weight: 500;
+    letter-spacing: 0.1rem;
+    font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+    @include flex-layout(center, center, row);
+    gap: 0.5rem;
+    @include cursor-animation($y1: 30px, $y2: 30px, $z1: 60deg, $z2: -60deg);
+
+    & > *:nth-child(1),
+    & > *:nth-child(2) {
+      padding: 0.4rem 0.6rem;
+    }
+  }
+}
+
+section:nth-child(6) {
+  //border:1px solid red;
+  @include flex-layout(start, space-around, row);
+  @include max-wh(100%, auto);
+  padding: 1.5rem;
+  gap: 2rem;
+
+
+  & > *:nth-child(1), & > *:nth-child(2), & > *:nth-child(3) {
+    //border: 1px solid red;
+    @include max-wh(100%, 100%);
+    width: 100%;
+    @include flex-layout(start, space-between, column);
+    gap: 1rem;
+    padding: 1.5rem;
+
+    & > *:nth-child(2) {
+      //border: 1px solid red;
+      @include max-wh(100%, auto);
+      @include flex-layout(center, space-between, row);
+      gap: 1rem;
+    }
+
+    & div {
+      //border: 1px solid red;
+      justify-self: center;
+      align-self: center;
+      font-size: 1.8rem;
+      font-weight: 400;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+      gap: 1rem;
+
+      & div {
+        //border: 1px solid red;
+        @include flex-layout(center, space-between, row);
+        justify-self: end;
+        gap: 2rem;
+        margin: auto -15rem;
+
+        i {
+          //border:1px solid red;
+          padding: 0.5rem 0.7rem;
+          border-radius: 50%;
+          background-color: lighten($nav-link-bg-color, 5%);
+          transition: all 0.6s ease;
+
+          &:hover {
+            background-color: lighten($nav-link-bg-color, 10%);
+            cursor: pointer;
+            border: 1px solid rgba($primary-color, 0.5);
+          }
+        }
+
+      }
+
+      & + div {
+        //border: 1px solid red;
+        @include flex-layout(center, center, row);
+        width: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 2rem 1rem;
+        border-radius: 1rem;
+      }
+
+    }
+  }
+
+  h3 {
+    font-size: 2.2rem;
+    font-weight: 500;
+    line-height: 1.2;
+    text-transform: uppercase;
+    font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  }
+
+  p {
+    font-size: 1.3rem;
+    font-weight: 500;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    opacity: 0.8;
+    font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+  }
+
+  & > div {
+    //border: 1px solid red;
+    aspect-ratio: 1/1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    @include max-wh(100%, auto);
+    width: 100%;
+    border-radius: 2.5rem;
+
+    &:nth-child(1) {
+      //border: 1px solid red;
+      background-image: url("https://assets-global.website-files.com/63cffb7c16ab3347fc9734c8/63d2ccbd7d003dfb6a1bdecb_team-01-p-800.webp");
+    }
+
+    &:nth-child(2) {
+      //border: 1px solid red;
+      background-image: url("https://assets-global.website-files.com/63cffb7c16ab3347fc9734c8/63d2ccbd2e12fa747e999689_team-02-p-800.webp");
+    }
+
+    &:nth-child(3) {
+      //border: 1px solid red;
+      background-image: url("https://assets-global.website-files.com/63cffb7c16ab3347fc9734c8/63d2ccbdc1f945f817bf4fd7_team-03-p-800.webp");
+    }
+  }
+
+}
+
+section:nth-child(7) {
+  //border: 1px solid red;
+  @include max-wh(100%, auto);
+  @include grid-layout();
+
+  img {
+    @include max-wh(100%, auto);
+    width: 100%;
+    border-radius: 2.5rem;
+  }
+
+  & > *:nth-child(2) {
+    //border: 1px solid red;
+    @include max-wh(100%, auto);
+    @include card-style();
+    width: 100%;
+    @include flex-layout(start, space-between, column);
+
+    h2 {
+      font-size: 4.4rem;
+      font-weight: 500;
+      line-height: 1.2;
+      text-transform: uppercase;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+    }
+
+    p {
+      font-size: 1.3rem;
+      font-weight: 500;
+      letter-spacing: 0.1rem;
+      text-transform: uppercase;
+      opacity: 0.8;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+    }
+
+    & > *:nth-child(1) {
+      //border: 1px solid red;
+      @include flex-layout(start, space-between, column);
+      //gap: 2rem;
+    }
+
+    & > *:nth-child(2) {
+      //border: 1px solid red;
+      @include flex-layout(center, space-between, row, 0.5rem);
+      @include cursor-animation($y1: 30px, $y2: -1px);
+      & > *:nth-child(1),
+      & > *:nth-child(2) {
+        padding: 0.4rem 0.6rem;
+      }
+    }
+  }
+
+}
+section:nth-child(8) {
+  //border:1px solid red;
+  @include max-wh(100%, auto);
+  @include grid-layout($gtc: 2fr 1fr);
+  background-color: $nav-btn-color;
+  border-radius: 2.5rem;
+  margin: 0 1.5rem;
+
+  & > *:nth-child(1) {
+    //border:1px solid red;
+    display: block;
+    padding: 5rem 7rem;
+    color: $nav-link-bg-color;
+
+    p {
+      font-size: 1.3rem;
+      font-weight: 500;
+      letter-spacing: 0.1rem;
+      padding: 1rem 0;
+      text-transform: uppercase;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+    }
+
+    h2 {
+      font-size: 6.8rem;
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+    }
+  }
+
+  & > *:nth-child(2) {
+    //border:1px solid red;
+    border-radius: 2.5rem;
+    @include flex-layout(end, end, row-reverse);
+    padding: 5rem 7rem;
+
+    h4 {
+      font-size: 1.3rem;
+      font-weight: 500;
+      letter-spacing: 0.1rem;
+      text-transform: uppercase;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+      background-color: $nav-link-bg-color;
+      padding: 1.5rem 3rem;
+      border-radius: 1rem;
+      gap: 0.5rem;
+
+      display: inline-flex;
+      align-items: center;
+      position: relative;
+
+      & > *:nth-child(1) {
+        //border:1px solid red;
+        font-size: 2rem;
+        opacity: 0.7;
+        border-radius: 50%;
+        padding: 0.4rem 0.6rem;
+        transition: all 0.6s ease 0.3s;
+        cursor: pointer;
+        transform: translate(0, 0) rotate(0deg);
+        z-index: 2;
+      }
+
+      & > *:nth-child(2) {
+        //border:1px solid red;
+        font-size: 2rem;
+        opacity: 0;
+        border-radius: 50%;
+        padding: 0.4rem 0.6rem;
+        background: transparent;
+        transition: all 0.6s ease 0.3s;
+        cursor: pointer;
+        transform: translate(30px, 0) rotate(0deg);
+        position: absolute;
+        right: 3rem;
+        z-index: 1;
+      }
+
+      &:hover {
+        & > *:nth-child(1) {
+          opacity: 0;
+          transform: translate(30px, -20px) rotate(60deg);
+          transition: all 0.6s ease 0.3s;
+        }
+
+        & > *:nth-child(2) {
+          opacity: 0.7;
+          transform: translate(0, 0) rotate(0deg);
+          transition: all 0.6s ease 0.3s;
+        }
+
+      }
+
+    }
+  }
+}
+
+section:nth-child(9) {
+  //border:1px solid red;
+  @include grid-layout($gtc: 0.2fr 0.8fr);
+  border-radius: 2.5rem;
+  @include max-wh(100%, auto);
+  max-height: 100%;
+
+  & > *:nth-child(1) {
+    background-color: $nav-link-bg-color;
+    //border:1px solid red;
+    @include flex-layout(start, center, column);
+    @include max-wh(100%, auto);
+    width: 100%;
+    padding: 4.5rem;
+    border-radius: 2.5rem;
+
+    & > *:nth-child(2) {
+      //border:1px solid red;
+      font-size: 1.8rem;
+      font-weight: 400;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+      @include flex-layout(end, space-around, row, 1rem);
+      align-self: center;
+      //gap: 1rem;
+      height: 100%;
+
+      i {
+        //border:1px solid red;
+        padding: 0.5rem 0.7rem;
+        border-radius: 50%;
+        background-color: lighten($nav-link-bg-color, 5%);
+        transition: all 0.6s ease;
+
+        &:hover {
+          background-color: lighten($nav-link-bg-color, 10%);
+          cursor: pointer;
+          border: 1px solid rgba($primary-color, 0.5);
+
+        }
+      }
+    }
+  }
+
+  & > *:nth-child(2) {
+    border-radius: 2.5rem;
+    background-color: transparent;
+    //border:1px solid red;
+    @include max-wh(100%, 100%);
+    @include flex-layout(start, space-around, column, 1.5rem);
+    width: 100%;
+    height: 100%;
+    padding: 0 0.5rem;
+    justify-content: center;
+    margin: 0 auto;
+
+
+    & > *:nth-child(1) {
+      //border:1px solid red;
+      border-radius: 2.5rem;
+      @include grid-layout($gtc: 1fr 1fr 1fr, $pad: 3rem);
+      @include max-wh(100%, auto);
+      width: 100%;
+      align-items: start;
+      margin-bottom: 1rem;
+      background-color: $nav-link-bg-color;
+
+      h4 {
+        font-size: 2.2rem;
+        font-weight: 500;
+        line-height: 1.2;
+        padding-bottom: 1rem;
+        font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+
+      }
+
+      h5 {
+        font-size: 1.6rem;
+        font-weight: 400;
+        opacity: 0.7;
+        padding: 1.5rem 0;
+        font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+
+        &:hover:not(:last-child) {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+
+      }
+
+      & > *:nth-child(1) :last-child {
+        //border:1px solid red;
+        border-radius: 1rem;
+        width: max-content;
+        padding: 1.5rem 2.5rem;
+        opacity: 1;
+        background-color: $nav-btn-color;
+        color: $bg-color;
+        font-weight: 600;
+        font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+        cursor: pointer;
+      }
+    }
+
+    & > *:nth-child(2) {
+      border-radius: 2.5rem;
+      //border:1px solid red;
+      background-color: $nav-link-bg-color;
+      @include max-wh(100%, auto);
+      @include flex-layout(center, space-between, row);
+      width: 100%;
+      font-size: 1.3rem;
+      font-weight: 500;
+      letter-spacing: 0.1rem;
+      padding: 2rem 3rem;
+      align-self: end;
+      text-transform: uppercase;
+      font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+
+      & > *:nth-child(2) {
+        //border:1px solid red;
+        font-size: 1.3rem;
+        font-weight: 500;
+        letter-spacing: 0.1rem;
+        opacity: 0.8;
+        font-family: 'Neue Haas Grotesk Display Pro', sans-serif;
+        @include cursor-animation($x1: 0px,
+        $x2: 0px,
+        $y1: 20px,
+        $y2: -20px,
+        $dir: right);
+
+        & > *:nth-child(1),
+        & > *:nth-child(2) {
+          padding: 0.4rem 0.6rem;
+        }
+      }
+
+    }
+  }
+}
+
+
+////////////////////////////////////////////
+
+@media (max-width: 890px) {
+  main {
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+    section:nth-child(1) {
+      position: relative;
+      padding: 1rem 2rem;
+      & > *:nth-child(2) > :last-child {
+        display: block;
+        font-size: 3rem;
+        position: absolute;
+        right: 2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10;
+      }
+
+      & > *:nth-child(2) > *:nth-child(1), *:nth-child(2) > *:nth-child(2), *:nth-child(2) > *:nth-child(3),
+      *:nth-child(2) > *:nth-child(4), *:nth-child(2) > *:nth-child(5) {
+        display: none;
+      }
+
+      *:nth-child(2) {
+        padding: 0 4rem;
+      }
+    }
+
+    section:nth-child(2), section:nth-child(7), section:nth-child(8), section:nth-child(9) {
+      @include grid-layout(1fr);
+    }
+
+    section:nth-child(3), section:nth-child(6) {
+      @include grid-layout(1fr 1fr, 3rem, 3rem, 1fr 1fr);
+    }
+
+    section:nth-child(4) {
+      @include flex-layout(center, center, column, 2rem);
+
+      & > *:nth-child(1) {
+        order: 2;
+      }
+
+      & > *:nth-child(2) {
+        order: 1;
+      }
+
+      & > *:nth-child(3) {
+        order: 3;
+      }
+
+      & > *:nth-child(4) {
+        order: 4;
+      }
+    }
+
+    section:nth-child(7) > *:nth-child(2) h2 {
+      font-size: 4.4rem;
+      padding-bottom: 5rem;
+    }
+
+    section:nth-child(8) {
+      max-width: 100%;
+      height: auto;
+
+      & > *:nth-child(2) {
+        @include flex-layout(center, center, column);
+        max-width: 100%;
+        width: 100%;
+        align-items: stretch;
+        justify-content: center;
+        text-align: center;
+      }
+
+      & > *:nth-child(2) h4 {
+        justify-content: center;
+      }
+    }
+
+    section:nth-child(9) > *:nth-child(1) > *:nth-child(2) {
+      align-self: start;
+      padding-top: 5rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    section:nth-child(9) > *:nth-child(2) > *:nth-child(1) {
+      @include grid-layout(1fr 1fr);
+    }
+
+    section:nth-child(9) > *:nth-child(2) > *:nth-child(2) {
+      @include flex-layout(center, center, column);
+    }
+  }
+}
+
+@media (max-width: 580px) {
+  main {
+    margin: 0 auto;
+    overflow-x: hidden;
+    section:nth-child(9) > *:nth-child(2) > *:nth-child(1) {
+      //border: 1px solid beige;
+      @include grid-layout(1fr);
+    }
+  }
+}
