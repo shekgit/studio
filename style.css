@@ -952,6 +952,9 @@ section:nth-child(9) > *:nth-child(2) > *:nth-child(2) > *:nth-child(2) > *:nth-
   main section:nth-child(4) > *:nth-child(4) {
     order: 4;
   }
+  main section:nth-child(4) h2 {
+    text-align: left;
+  }
   main section:nth-child(7) > *:nth-child(2) h2 {
     font-size: 4.4rem;
     padding-bottom: 5rem;
@@ -993,6 +996,9 @@ section:nth-child(9) > *:nth-child(2) > *:nth-child(2) > *:nth-child(2) > *:nth-
     justify-content: center;
     flex-direction: column;
     gap: 2rem;
+  }
+  main section:nth-child(4) > *:nth-child(1) > *:nth-child(2) p, main section:nth-child(4) > *:nth-child(4) > *:nth-child(2) p {
+    column-count: 1;
   }
 }
 @media (max-width: 580px) {

@@ -920,6 +920,9 @@ section:nth-child(9) {
       & > *:nth-child(4) {
         order: 4;
       }
+      h2 {
+        text-align: left;
+      }
     }
 
     section:nth-child(7) > *:nth-child(2) h2 {
@@ -961,6 +964,9 @@ section:nth-child(9) {
     section:nth-child(9) > *:nth-child(2) > *:nth-child(2) {
       @include flex-layout(center, center, column);
     }
+    section:nth-child(4) > *:nth-child(1) > *:nth-child(2) p, section:nth-child(4) > *:nth-child(4) > *:nth-child(2) p{
+      column-count: 1;
+    }
   }
 }
 
@@ -969,7 +975,6 @@ section:nth-child(9) {
     margin: 0 auto;
     overflow-x: hidden;
     section:nth-child(9) > *:nth-child(2) > *:nth-child(1) {
-      //border: 1px solid beige;
       @include grid-layout(1fr);
     }
   }
